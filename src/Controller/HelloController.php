@@ -7,7 +7,6 @@ namespace App\Controller;
 use App\Entity\Person;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,13 +19,9 @@ class HelloController extends AbstractController
     public function index(Request $request): Response
     {
         $person = new Person();
-        $person->setName('山田太郎')
-            ->setAge(25)
-            ->setMail('yamada.taro@sample.com');
 
         $form = $this->createFormBuilder($person)
             ->add('name', TextType::class)
-            ->add('age', IntegerType::class)
             ->add('mail', EmailType::class)
             ->add('save', SubmitType::class, ['label' => 'Click'])
             ->getForm();
@@ -34,12 +29,11 @@ class HelloController extends AbstractController
         if ($request->getMethod() == 'POST'){
             $form->handleRequest($request);
             $obj = $form->getData();
-            $message = '名前: ' . $obj->getName() . '<br>'
-                . '年齢: ' . $obj->getAge() . '<br>'
-                . 'メールアドレス: ' . $obj->getMail();
+            $message = '名前は' . $obj->getName() . 'で、' . 'メールアドレスは ' . $obj->getMail() . 'です。';
         } else {
-            $message = 'こんにちは！';
+            $message = 'こんにちは！<br>あなたの名前とメールアドレスを教えて下さい！';
         }
+
         return $this->render('hello/index.html.twig', [
             'title' => 'Hello World!',
             'message' => $message,
