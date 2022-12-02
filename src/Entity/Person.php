@@ -6,18 +6,17 @@ namespace App\Entity;
 
 class Person
 {
-    private string $name;
-    private string $mail;
+    private ?string $name = null;
+    private ?string $mail = null;
 
     public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(string $name): void
     {
         $this->name = $name;
-        return $this;
     }
 
     public function getMail(): string
@@ -25,9 +24,8 @@ class Person
         return $this->mail;
     }
 
-    public function setMail(string $mail): static
+    public function setMail(string $mail): void
     {
         $this->mail = $mail;
-        return $this;
     }
 }
